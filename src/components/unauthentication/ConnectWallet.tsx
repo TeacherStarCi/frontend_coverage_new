@@ -31,17 +31,16 @@ export const ConnectWallet = (props: ConnectWalletProps) => {
             rpcEndpoint,
             offlineSigner
         )
-        const address = (await keplr.getKey(chainId)).bech32Address;
+        const keyUser = (await keplr.getKey(chainId));
+        const address = keyUser.bech32Address;
         if (address !== '') {
             if (context != null) {
                 context.setter.setClient(signingClient);
-                const keyUser = (await keplr.getKey(chainId));
-
                 const requestBody: {
                     address: string,
                     username: string
                 } = {
-                    address: keyUser.bech32Address,
+                    address: address,
                     username: keyUser.name,
                 }
 
